@@ -69,28 +69,24 @@ function my_tweets(){
   });
 }
 
-function movie_this(){  
-  
+
+function movie_this(){
+  allArguments = process.argv;
   var movie = process.argv[3];
-  // If nothing was passed in the process.argv, set the movie name to Mr. NoBoby
   if (allArguments.length === 3) {
     movie = "Mr.+Nobody";
   }
- 
   request(`http://www.omdbapi.com/?t=${movie}&y=&plot=short&apikey=trilogy`, function (error, response, body) {
-
-    // If there were no errors and the response code was 200 (i.e. the request was successful)...
     if (!error && response.statusCode === 200) {
       body = (JSON.parse(body));
-      // Then we print out the imdbRating
       var movieInfo = {
-        Title: (body.Title),
-        Year: (body.Year),
-        imdbRating: (body.imdbRating),
-        rottenTomatoesRating: (body.Ratings[1].Value),
-        country: (body.Country),
-        plot: (body.Plot),
-        actors: (body.Actors)
+        Title: body.Title,
+        Year: body.Year,
+        imdbRating: body.imdbRating,
+        // rottenTomatoesRating: body.Ratings[1].Value,
+        country: body.Country,
+        plot: body.Plot,
+        actors: body.Actors
       }
       console.log(movieInfo);
     }
